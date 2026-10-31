@@ -1,0 +1,54 @@
+## Build results
+bin/
+obj/
+out/
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+
+## Rider / VS Code
+.idea/
+.vscode/
+
+## Logs
+*.log
+
+## NuGet
+*.nupkg
+packages/
+*.snupkg
+
+## Publish output
+publish/
+wwwroot/lib/
+
+## User-specific files
+*.userprefs
+
+## OS generated files
+.DS_Store
+Thumbs.db
+
+## ASP.NET Core
+appsettings.Development.json
+appsettings.Local.json
+
+## Entity Framework
+Migrations/
+
+## Azure
+*.azurePubxml
+*.pubxml
+*.publishsettings
+
+## Certificates
+*.pfx
+*.p12
+
+## Secrets
+secrets.json
+
+## Docker
+*.pid

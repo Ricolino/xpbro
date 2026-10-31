@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../xpbro.DomainModels/xpbro.DomainModels.csproj" />
+  <Project Path="xpbro-backend/xpbro-backend.csproj" />
+</Solution>

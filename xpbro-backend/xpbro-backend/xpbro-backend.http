@@ -1,0 +1,6 @@
+@xpbro_backend_HostAddress = http://localhost:5257
+
+GET {{xpbro_backend_HostAddress}}/user/GetUserProfile
+Accept: application/json
+
+###
