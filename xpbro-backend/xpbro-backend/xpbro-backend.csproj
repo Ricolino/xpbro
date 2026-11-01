@@ -15,6 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\xpbro.DataAccess.Interfaces\xpbro.DataAccess.Interfaces.csproj" />
+    <ProjectReference Include="..\..\xpbro.DataAccess.Supabase\xpbro.DataAccess.Supabase.csproj" />
     <ProjectReference Include="..\..\xpbro.DomainModels\xpbro.DomainModels.csproj" />
   </ItemGroup>
 

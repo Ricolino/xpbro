@@ -1,29 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using Supabase.Gotrue;
 
-[ApiController]
-[Route("auth")]
-public class AuthController(SupabaseAuthService auth) : ControllerBase
-{
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginDto dto)
-    {
-        var session = await auth.LoginAsync(dto.Email, dto.Password);
-        return Ok(session);
-    }
+//namespace xpbro_backend.Controllers;
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] LoginDto dto)
-    {
-        var user = await auth.RegisterAsync(dto.Email, dto.Password);
-        return Ok(user);
-    }
+//[ApiController]
+//[Route("auth")]
+//public class AuthController(SupabaseAuthService auth) : ControllerBase
+//{
+//    [HttpPost("login")]
+//    public async Task<IActionResult> Login([FromBody] LoginDto dto)
+//    {
+//        var session = await auth.LoginAsync(dto.Email, dto.Password);
+//        return Ok(session);
+//    }
 
-    [HttpGet("me")]
-    public IActionResult Me()
-    {
-        var user = auth.GetCurrentUser();
-        return Ok(user);
-    }
-}
+//    [HttpPost("register")]
+//    public async Task<IActionResult> Register([FromBody] LoginDto dto)
+//    {
+//        var user = await auth.RegisterAsync(dto.Email, dto.Password);
+//        return Ok(user);
+//    }
 
-public record LoginDto(string Email, string Password);
+//    [HttpGet("me")]
+//    public IActionResult Me()
+//    {
+//        User user = auth.GetCurrentUser();
+//        return Ok(user);
+//    }
+//}
+
+//public record LoginDto(string Email, string Password);

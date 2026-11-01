@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+
+namespace xpbro_backend.Middleware;
 
 public class SupabaseJwtMiddleware
 {
@@ -17,29 +17,40 @@ public class SupabaseJwtMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var token = context.Request.Headers.Authorization.FirstOrDefault()?.Replace("Bearer ", "");
+        string? authHeader = context.Request.Headers.Authorization.FirstOrDefault();
 
-        if (!string.IsNullOrEmpty(token))
+        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
         {
+            var token = authHeader["Bearer ".Length..];
+
             try
             {
                 var handler = new JwtSecurityTokenHandler();
                 var key = Encoding.UTF8.GetBytes(_jwtSecret);
 
-                handler.ValidateToken(token, new TokenValidationParameters
+                var parameters = new TokenValidationParameters
                 {
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true
-                }, out var validatedToken);
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ClockSkew = TimeSpan.Zero
+                };
 
-                context.Items["SupabaseUser"] = validatedToken;
+                var principal = handler.ValidateToken(token, parameters, out var validatedToken);
+
+                var jwt = (JwtSecurityToken)validatedToken;
+
+                var userId = jwt.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+                var role = jwt.Claims.FirstOrDefault(c => c.Type == "user_role")?.Value;
+
+                context.Items["UserId"] = userId;
+                context.Items["UserRole"] = role;
             }
-            catch
+            catch (Exception)
             {
-                // token invalid → ignorăm, nu blocăm request-ul
+                // Token invalid → nu blocăm request-ul, doar nu setăm user-ul
             }
         }
 

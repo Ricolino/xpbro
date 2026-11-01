@@ -1,12 +1,20 @@
+using xpbro.DataAccess.Interfaces;
+using xpbro.DataAccess.Supabase.Posts;
 using xpbro_backend.Interfaces;
+using xpbro_backend.Middleware;
 using xpbro_backend.Services;
+
+//TODO: Add Serilog for logging
+//TODO: Add Health Checks
+//TODO: Add Seq sink maybe?
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddSingleton<SupabaseAuthService>();
+//builder.Services.AddSingleton<SupabaseAuthService>();
 
+builder.Services.AddScoped<IPostsRepository, SupabasePostsRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();

@@ -1,4 +1,6 @@
 <Solution>
+  <Project Path="../xpbro.DataAccess.Interfaces/xpbro.DataAccess.Interfaces.csproj" />
+  <Project Path="../xpbro.DataAccess.Supabase/xpbro.DataAccess.Supabase.csproj" />
   <Project Path="../xpbro.DomainModels/xpbro.DomainModels.csproj" />
   <Project Path="xpbro-backend/xpbro-backend.csproj" />
 </Solution>
