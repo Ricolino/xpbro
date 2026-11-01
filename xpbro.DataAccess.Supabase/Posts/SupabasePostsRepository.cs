@@ -43,19 +43,19 @@ public class SupabasePostsRepository : IPostsRepository
         var result = await _client
             .From<SupabasePost>()
             .Select("title, body, published_at")
-            .Filter("published", Operator.Equals, true)
+            .Filter("published", Operator.Equals, "true")
             .Order("published_at", Ordering.Descending)
             .Get();
 
-        return [.. result.Models
-            .Select(x => new Post
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Body = x.Body,
-                Published = x.Published,
-                PublishedAt = x.PublishedAt
-            })];
+        return result.Models.Select(x => new Post
+        {
+            Id = x.Id,
+            Title = x.Title,
+            Body = x.Body,
+            Published = x.Published,
+            PublishedAt = x.PublishedAt
+        })
+    .ToList();
     }
 }
 

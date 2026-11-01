@@ -13,8 +13,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<IUserService, UserService>();
 //builder.Services.AddSingleton<SupabaseAuthService>();
+builder.Services.AddScoped<IPostService, PostsService>();
 
 builder.Services.AddScoped<IPostsRepository, SupabasePostsRepository>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
@@ -35,6 +46,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.UseMiddleware<SupabaseJwtMiddleware>();
+
+app.UseCors("AllowAll");
 
 app.MapControllers();
 
